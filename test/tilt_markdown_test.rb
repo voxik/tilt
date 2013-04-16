@@ -29,12 +29,12 @@ module MarkdownTests
 
   def test_escape_html
     html = nrender "Hello <b>World</b>"
-    assert_equal "<p>Hello <b>World</b></p>", html
+    assert_equal "<p>Hello <b>World</b></p>", html.strip
   end
 
   def test_escape_html_false
     html = nrender "Hello <b>World</b>", :escape_html => false
-    assert_equal "<p>Hello <b>World</b></p>", html
+    assert_equal "<p>Hello <b>World</b></p>", html.strip
   end
 
   def test_escape_html_true
@@ -42,37 +42,37 @@ module MarkdownTests
       flunk "redcarpet doesn't support :escape_html yet"
     end
     html = nrender "Hello <b>World</b>", :escape_html => true
-    assert_equal "<p>Hello &lt;b&gt;World&lt;/b&gt;</p>", html
+    assert_equal "<p>Hello &lt;b&gt;World&lt;/b&gt;</p>", html.strip
   end
 
   def test_smart_quotes
     html = nrender 'Hello "World"'
-    assert_equal '<p>Hello "World"</p>', html
+    assert_equal '<p>Hello "World"</p>', html.strip
   end
 
   def test_smart_quotes_false
     html = nrender 'Hello "World"', :smartypants => false
-    assert_equal '<p>Hello "World"</p>', html
+    assert_equal '<p>Hello "World"</p>', html.strip
   end
 
   def test_smart_quotes_true
     html = nrender 'Hello "World"', :smartypants => true
-    assert_equal '<p>Hello “World”</p>', html
+    assert_equal '<p>Hello “World”</p>', html.strip
   end
 
   def test_smarty_pants
     html = nrender "Hello ``World'' -- This is --- a test ..."
-    assert_equal "<p>Hello ``World'' -- This is --- a test ...</p>", html
+    assert_equal "<p>Hello ``World'' -- This is --- a test ...</p>", html.strip
   end
 
   def test_smarty_pants_false
     html = nrender "Hello ``World'' -- This is --- a test ...", :smartypants => false
-    assert_equal "<p>Hello ``World'' -- This is --- a test ...</p>", html
+    assert_equal "<p>Hello ``World'' -- This is --- a test ...</p>", html.strip
   end
 
   def test_smarty_pants_true
     html = nrender "Hello ``World'' -- This is --- a test ...", :smartypants => true
-    assert_equal "<p>Hello “World” — This is —– a test …</p>", html
+    assert_equal "<p>Hello “World” — This is —– a test …</p>", html.strip
   end
 end
 
@@ -98,7 +98,7 @@ begin
 
     def test_smarty_pants_true
       html = nrender "Hello ``World'' -- This is --- a test ...", :smartypants => true
-      assert_equal "<p>Hello “World'' – This is — a test …</p>", html
+      assert_equal "<p>Hello “World'' – This is — a test …</p>", html.strip
     end
 
     def test_fenced_code_blocks_with_lang
@@ -109,7 +109,7 @@ begin
       COD
 
       html = nrender code, :fenced_code_blocks => true
-      assert_equal %Q{<pre><code class="ruby">puts "hello world"\n</code></pre>}, html
+      assert_equal %Q{<pre><code class="ruby">puts "hello world"\n</code></pre>}, html.strip
     end
   end
 rescue LoadError => boom
